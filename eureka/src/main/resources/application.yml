@@ -1,0 +1,11 @@
+server:
+  port: 8761
+#  If both my API and Eureka is running on the same machine then if we use 8761 for Eureka then
+#  all my API's will get auto registered
+
+#  This is done because I don't want my Eureka service to get registered with Eureka itself and show on the dashboard.
+eureka:
+  client:
+    register-with-eureka: false
+  instance:
+      lease-renewal-interval-in-seconds=0:
