@@ -7,17 +7,22 @@ import com.example.employee.EmployeeModel.StudentResponse;
 import com.example.employee.entity.Employees;
 import com.example.employee.exception.customException.ResourceNotFound;
 import com.example.employee.repository.EmployeeRepo;
-import com.example.employee.studentFeignClient.StudentFeignClient;
+import com.example.employee.feignClient.StudentFeignClient;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
   private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
   @Autowired private EmployeeRepo employeeRepo;
@@ -27,7 +32,16 @@ public class EmployeeServiceImpl implements EmployeeService {
   and create a bean also */
   private ModelMapper modelMapper;
 
-  @Autowired private RestTemplate restTemplate;
+/*  We will set the RestTemplate value using constructor injection.
+  @Autowired */
+  private RestTemplate restTemplate;
+
+/*  Here we are setting the RestTemplate and the base URL, so that we don't have to write the url every
+  time we have to call the student API*/
+  public EmployeeServiceImpl(@Value("${studentService.base.url.for.restTemplate}") String studentBaseUrl,
+                             RestTemplateBuilder restTemplateBuilder) {
+  this.restTemplate=restTemplateBuilder.rootUri(studentBaseUrl).build();
+  }
 
   @Autowired private StudentFeignClient studentFeignClient;
 

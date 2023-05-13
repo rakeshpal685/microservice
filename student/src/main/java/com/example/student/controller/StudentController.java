@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,9 @@ import java.util.List;
 public class StudentController {
 
   @Autowired StudentService studentService;
+
+  @Autowired
+  private Environment environment;
 
   /*  @Autowired
   public EmployeeController(EmployeeService employeeService) {
@@ -66,7 +70,9 @@ public class StudentController {
       } // If our project has JAX-B dependency then it will return xml value.
       )
   public ResponseEntity<StudentResponse> getStudentById(@PathVariable("id") int stdId) {
+  //public String getStudentById(@PathVariable("id") int stdId) {
     return new ResponseEntity<StudentResponse>(studentService.getStudentById(stdId), HttpStatus.OK);
+           // + environment.getProperty("server.port");
   }
 
   @GetMapping(value = "/getStudentById")

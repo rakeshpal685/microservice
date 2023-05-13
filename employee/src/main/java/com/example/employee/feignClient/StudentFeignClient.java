@@ -1,11 +1,9 @@
-package com.example.employee.studentFeignClient;
+package com.example.employee.feignClient;
 
 import com.example.employee.EmployeeModel.StudentResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.List;
 
 @FeignClient(name = "STUDENT")
 public interface StudentFeignClient {

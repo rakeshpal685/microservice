@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +36,6 @@ public class StudentServiceImpl implements StudentService {
   }
 
   public StudentResponse getStudentById(int id) {
-    //        Optional<Employees> employees= employeeRepo.findById(id);
-    //        if(employees.isPresent()){
-    //            return employees.get();
-    //        }
-    //        else {
-    //            throw new ResourceNotFound("Employee", "id", id);
-    //        }
-    // same in lambda
     Student student =
         studentRepo.findById(id).orElseThrow(() -> new ResourceNotFound("Student", "id", id));
     // All the fields of our Employees entity will be mappd to the EmployeeResponse model

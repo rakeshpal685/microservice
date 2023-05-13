@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients("com/example/employee/studentFeignClient")
+@EnableFeignClients("com/example/employee/feignClient")
 public class EmployeeApplication {
 
 	public static void main(String[] args) {
