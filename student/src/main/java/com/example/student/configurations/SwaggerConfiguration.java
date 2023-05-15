@@ -5,7 +5,7 @@ import io.swagger.v3.oas.models.info.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// http://localhost:8080/swagger-ui/index.html --Swagger URL
+// http://localhost:8080/swagger-ui/index.html --Swagger URL,  use the port where the service is running
 @Configuration
 // @EnableSwagger2-  Old way
 public class SwaggerConfiguration {

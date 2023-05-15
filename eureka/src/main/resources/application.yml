@@ -1,11 +1,18 @@
 server:
   port: 8761
+#  port: 8770
 #  If both my API and Eureka is running on the same machine then if we use 8761 for Eureka then
-#  all my API's will get auto registered
+#  all my API's will get auto registered, if we run eureka on some other port then we have to include,
+#eureka.client.fetch-registry=false, because by default my custom port eureka thinks that we have another eureka
+#running on default port and it tries to gather the api registered on that port, but we have to tell our eureka
+#that there is no such default port eureka available
 
 #  This is done because I don't want my Eureka service to get registered with Eureka itself and show on the dashboard.
+#If we want to show the eureka server also in the dashboard then just set the register to true if eureka is running
+#on default port and along with this also set eureka.client.serviceUrl.defaultZone=http://localhost:Custom_portnumber/eureka, if
+#eureka is running on custom port
 eureka:
   client:
     register-with-eureka: false
-  instance:
-      lease-renewal-interval-in-seconds=0:
+#    fetch-registry: false, for details see above comment in port section
+

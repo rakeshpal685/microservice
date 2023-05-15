@@ -111,7 +111,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     //We can do something like this also
     ResponseEntity<StudentResponse> forEntity = restTemplate.getForEntity("http://localhost:8081/studController/getStudentById/{id}", StudentResponse.class);
-    employeesResponse.setStudentDetails(forEntity.getBody());*/
+    employeesResponse.setStudentDetails(forEntity.getBody());
+
+    If we don't want to hardcode out URL we can do this
+      @Autowired LoadBalancerClient loadBalancerClient from spring framework
+     ServiceInstance instance= loadBalancerClient.choose("Student-Service")/the name of the service given in eureka
+String URI= instance.getUri().toString();
+StudentResponse restTemplateForObject =
+        restTemplate.getForObject(
+            URI+"/studController/getStudentById/{id}", StudentResponse.class, id);
+    employeesResponse.setStudentDetails(restTemplateForObject);
+    OR ELSE
+    use @LoadBalanced where we are declaring the RestTemplate bean rather than autowiring it here.
+      */
 
     StudentResponse studentApi = studentFeignClient.invokeStudentApi(id);
     // System.out.println(studentApi);
