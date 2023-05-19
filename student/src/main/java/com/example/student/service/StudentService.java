@@ -10,7 +10,7 @@ public interface StudentService {
 
   Student saveStudent(Student student);
 
-  List<Student> getAllStudents();
+  List<StudentResponse> getAllStudents();
 
   StudentResponse getStudentById(int id);
 

@@ -1,5 +1,6 @@
 package com.example.student.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.example.student.studentModel.StudentResponse;
@@ -30,9 +31,11 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
-  public List<Student> getAllStudents() {
+  public List<StudentResponse> getAllStudents() {
     List<Student> studentList = studentRepo.findAll();
-    return studentList;
+    List<StudentResponse> students = Arrays.asList(modelMapper.map(studentList, StudentResponse[].class));
+    return students;
+
   }
 
   public StudentResponse getStudentById(int id) {

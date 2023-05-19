@@ -52,7 +52,7 @@ public class EmployeeController {
         @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
         @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
       })
-  public ResponseEntity<List<Employees>> getAllEmployee() {
+  public ResponseEntity<List<EmployeesResponse>> getAllEmployee() {
     return ResponseEntity.status(HttpStatus.OK).body(employeeService.getAllEmployees());
     /*    Rather than creating a new ResponseEntity<> object like below we can do this also*/
   }

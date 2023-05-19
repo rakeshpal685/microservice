@@ -1,5 +1,6 @@
 package com.example.employee.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.example.employee.EmployeeModel.EmployeesResponse;
@@ -35,6 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 /*  We will set the RestTemplate value using constructor injection.
   @Autowired */
   private RestTemplate restTemplate;
+  @Autowired private StudentFeignClient studentFeignClient;
 
 /*  Here we are setting the RestTemplate and the base URL, so that we don't have to write the url every
   time we have to call the student API*/
@@ -43,25 +45,34 @@ public class EmployeeServiceImpl implements EmployeeService {
   this.restTemplate=restTemplateBuilder.rootUri(studentBaseUrl).build();
   }
 
-  @Autowired private StudentFeignClient studentFeignClient;
-
   @Override
   public Employees saveEmployees(Employees employees) {
     return employeeRepo.save(employees);
   }
 
   @Override
-  public List<Employees> getAllEmployees() {
+  public List<EmployeesResponse> getAllEmployees() {
     List<Employees> employeesList = employeeRepo.findAll();
-    return employeesList;
+    //Here I am mapping the employees List to EmployeesResponse array and finally converting it to List
+    List<EmployeesResponse> employeesResponse= Arrays.asList(modelMapper.map(employeesList, EmployeesResponse[].class));
+    //Here I am setting the students also to the employees
+    employeesResponse.forEach(employee -> {
+           // employee.setStudentDetails(studentFeignClient.invokeStudentApi(employee.getEmpid())));
+    for (StudentResponse response :studentFeignClient.getAllStudents()) {
+        if(response.getId()==employee.getEmpid()){
+          employee.setStudentDetails(response);
+        }
+    }
+
+    });
+    return employeesResponse;
   }
 
   public EmployeesResponse getEmployeeById(int id) {
     Employees employee =
         employeeRepo.findById(id).orElseThrow(() -> new ResourceNotFound("Employee", "id", id));
-    // All the fields of our Employees entity will be mappd to the EmployeeResponse model
-    EmployeesResponse employeesResponse = modelMapper.map(employee, EmployeesResponse.class);
-    return employeesResponse;
+    // All the fields of our Employees entity will be mapped to the EmployeeResponse model
+    return modelMapper.map(employee, EmployeesResponse.class);
   }
 
   @Override
