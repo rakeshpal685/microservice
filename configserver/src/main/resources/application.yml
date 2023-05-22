@@ -1,0 +1,28 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: CONFIG_SERVER
+  boot:
+    admin:
+      client:
+            url: http://localhost:1111/
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/rakeshpal685/microservices-config-server
+          clone-on-start: true
+#we can put username and password too for private repo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+
