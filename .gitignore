@@ -30,3 +30,4 @@
 /student/target/classes/com/example/student/service/StudentServiceImpl.class
 /employee/target/classes/com/example/employee/configurations/SwaggerConfiguration.class
 /student/target/classes/com/example/student/configurations/SwaggerConfiguration.class
+/.idea/sonarlint/securityhotspotstore/index.pb
