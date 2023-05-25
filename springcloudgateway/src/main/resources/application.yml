@@ -39,7 +39,7 @@ spring:
             - id: EMPLOYEE
 #lb stands for load balanced, so for the given uri the request should be navigated to the predicates, the uri
 #name should match with the eureka registered name of the service
-              uri: lb://EMPLOYEE
+              uri: lb://EMPLOYEE-SERVICE
               predicates:
                   - Path=/empController/**
 # If we have more than one controller in our microservice then we can use ,/controller_path over here in the Path
