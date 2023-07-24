@@ -1,18 +1,30 @@
 server:
   port: 8761
-#  port: 8770
-#  If both my API and Eureka is running on the same machine then if we use 8761 for Eureka then
-#  all my API's will get auto registered, if we run eureka on some other port then we have to include,
-#eureka.client.fetch-registry=false, because by default my custom port eureka thinks that we have another eureka
-#running on default port and it tries to gather the api registered on that port, but we have to tell our eureka
-#that there is no such default port eureka available
+#  port: 5000
+#  If both my API and Eureka is running on the same machine then if we use 8761 for Eureka then all my API's will get auto registered,
+#If not then I have to tell my services to register themselves with the modified url like below
+#eureka.client.service-url.defaultZone=http://localhost:5000/eureka/
 
-#  This is done because I don't want my Eureka service to get registered with Eureka itself and show on the dashboard.
-#If we want to show the eureka server also in the dashboard then just set the register to true if eureka is running
-#on default port and along with this also set eureka.client.serviceUrl.defaultZone=http://localhost:Custom_portnumber/eureka, if
-#eureka is running on custom port
 eureka:
   client:
+
+    #  This is done because I don't want my Eureka service to get registered with Eureka itself or other Eureka servers
+    # and show on the dashboard. If we want to show the eureka server also in the dashboard then just set the register to true
+    # if eureka is running on default port and along with this also set
+    # eureka.client.serviceUrl.defaultZone=http://localhost:Custom_portnumber/eureka, if eureka is running on custom port
     register-with-eureka: false
-#    fetch-registry: false, for details see above comment in port section
+
+    #  In idle case scenario we have multiple Eureka servers to prevent single point of failure, to keep all the
+    #  servers in synch with the registered services we use eureka.client.fetch-registry=true
+    #eureka.client.fetch-registry=false, this is done to tell Eureka that we don't have another eureka server so
+    #don't try to gather the api registered with other Eureka servers.
+    #    If i am changing the default port to something else and i want my Eureka service too also register then I have to
+    #    set the below property like i did for other services incase of other port
+    #eureka.client.service-url.defaultZone=http://localhost:5000/eureka/
+    fetch-registry: false
+
+spring:
+  application:
+    name: Eureka Discovery Service
+
 

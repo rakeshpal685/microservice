@@ -1,6 +1,8 @@
-package com.example.employee.EmployeeModel;
+package com.example.organisation.dto;
+
 
 import java.time.LocalDate;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,19 +15,10 @@ directly to the controller to prevent exposing our DB data directly to outside w
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeesResponse {
-  private Integer empid;
-
-  private String empName;
-
-  private String status;
-
-  private Integer salary;
-
-  private LocalDate date_created;
-
-  private LocalDate date_updated;
-
-  // Here we want to pass the student values also and hence we are mapping student mapper here.
-  private StudentResponse studentDetails;
+public class OrganisationDTO {
+  
+  private OrganisationDetail organisationDetail;
+  
+  private List<EmployeesDTO> employeesDTOs;
+  
 }

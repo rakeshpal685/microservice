@@ -36,7 +36,7 @@ public class StudentController {
   take the  body of the request (json) and add to our method, (Internally DispatcherServlet will convert the json to
   java object and map it to the parameter of the method*/
   @PostMapping(value = "/save", consumes = "application/json")
-  public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+  public ResponseEntity<StudentResponse> saveStudent(@RequestBody Student student) {
     return ResponseEntity.status(HttpStatus.CREATED).body(studentService.saveStudent(student));
   }
 

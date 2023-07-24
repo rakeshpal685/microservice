@@ -1,0 +1,9 @@
+All the services that are registered with Eureka will also maintain their own cache of the services that are
+registered with Eureka.
+
+When my service is registered for the very first time it will call localhost://ipOfEureka/eureka/apps/ internally
+to see all the registered services
+
+Once the service is registered then it will call localhost://ipOfEureka/eureka/apps/delta to see just any new
+services got registered or not. It will not fetch the whole list of registered service once again. It does so
+along with the sending of heartbeat

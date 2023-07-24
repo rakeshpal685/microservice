@@ -1,50 +1,69 @@
 #Telling where to look for eureka
 eureka:
-    client:
-        fetch-registry: true
-        register-with-eureka: true
-        service-url:
-            defaultZone: http://localhost:8761/eureka/
-    instance:
-        prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
 #exposing all the endpoints for admin server
 management:
-    endpoints:
-        web:
-            exposure:
-                include: '*'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#logging for cloud gateway
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway=INFO:
 
 # server port
 server:
-    port: 8084
+  port: 8084
 
 
-#registering the name in the eureka server and telling the port of admin server
+#registering the name in the eureka server and registering with admin server
 spring:
-    application:
-        name: API-GATEWAY
-    boot:
-        admin:
-            client:
-                url: http://localhost:1111/
-#registering the services to the gateway
-    cloud:
-        gateway:
-          discovery.locator:
-            enabled: true
-            lowerCaseServiceId: true
-          routes:
-#id can be anything
-            - id: EMPLOYEE
-#lb stands for load balanced, so for the given uri the request should be navigated to the predicates, the uri
-#name should match with the eureka registered name of the service
-              uri: lb://EMPLOYEE-SERVICE
-              predicates:
-                  - Path=/empController/**
-# If we have more than one controller in our microservice then we can use ,/controller_path over here in the Path
+  application:
+    name: API-GATEWAY
+  boot:
+    admin:
+      client:
+        url: http://localhost:1111/
+  #registering the services to the gateway
+  cloud:
+    gateway:
+      discovery.locator:
+        enabled: true #This will fetch the eureka registry for all the services and do automatic routing, if I don't provide the routing by myself using properties or java configuration, I can keep this and manual routing both together
+        lowerCaseServiceId: true #This will change the UpperCase service name registered with eureka to lowercase when creating the url for the service call
+      #We can define the routes in java file also, see GatewayRoutes
+      routes: #id can be anything
+        #        - id: EMPLOYEE
+        #          #lb stands for load balanced, the uri name should match with the eureka registered name of the service
+        #          #So when a request comes to our gateway that matches with the condition given in the predicate,
+        #          #the gateway will go to the Eureka and choose one service from EMPLOYEE-SERVICE (uri) in loadbalanced way and redirect the call
+        #          uri: lb://EMPLOYEE-SERVICE
+        #          #predicates are the conditions that are checked by the gateway, which when satisfied will redirect the request
+        #          predicates: #Here we are telling that if my request path has the below pattern then navigate the request to the uri
+        #            - Path=/empController/**
+        #              # If we have more than one controller in our microservice then we can use ,/controller_path over here in the Path
+        #              #Here we are telling that if my request has the below cookie then navigate the request to the uri
+        #              - Cookie-=myCookie,mycookieValue
 
-            - id: xyz
-              uri: lb://STUDENT-SERVICE
-              predicates:
-                  - Path=/studController/**
+        #       - id: AnyRandomID
+        #          uri: lb://STUDENT-SERVICE
+        #          predicates:
+        #            - Path=/studController/**
+
+        - id: abc
+          uri: lb://ORGANISATION-SERVICE
+          predicates:
+            - Path=/**
+
+

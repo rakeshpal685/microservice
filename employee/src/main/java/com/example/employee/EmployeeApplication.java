@@ -7,7 +7,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients("com/example/employee/feignClient")
+/*This helps us to scan for the feignClient and generate an implementation during runtime,
+ this will scan the root package for the classes with @FeignClient,in case if base package is not specified*/
+@EnableFeignClients(basePackages = "com/example/employee/feignClient")
 //If the feignClient is present in the base package then no need to give the path here.
 public class EmployeeApplication {
 

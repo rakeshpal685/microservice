@@ -26,8 +26,10 @@ public class StudentServiceImpl implements StudentService {
   private ModelMapper modelMapper;
 
   @Override
-  public Student saveStudent(Student student) {
-    return studentRepo.save(student);
+  public StudentResponse saveStudent(Student student) {
+    Student saved = studentRepo.save(student);
+    return modelMapper.map(saved,StudentResponse.class);
+    
   }
 
   @Override

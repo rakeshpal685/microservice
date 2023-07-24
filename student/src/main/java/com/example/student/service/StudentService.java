@@ -7,8 +7,8 @@ import com.example.student.entity.Student;
 import org.springframework.data.domain.Pageable;
 
 public interface StudentService {
-
-  Student saveStudent(Student student);
+  
+  StudentResponse saveStudent(Student student);
 
   List<StudentResponse> getAllStudents();
 
