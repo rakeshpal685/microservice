@@ -1,5 +1,6 @@
 package com.example.gateway.springcloudgateway;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -16,10 +17,12 @@ import java.util.function.Function;
 
 //This class is created to handle the routes, we can do the same in .yml/properties files too, here we are doing it in java way
 @Configuration
+@Log4j2
 public class GatewayRoutes {
 
   @Bean
   public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+    log.info("Inside prefilter of GatewayRoutes class");
     return builder
         .routes()
     /*So when a request comes to our gateway that matches with the condition given in the predicate (p in this case),
@@ -42,7 +45,7 @@ Similarly we can have p.cookies too, here we are telling that if my request has 
   public GlobalFilter xyzFilter() {
     return (ServerWebExchange exchange, GatewayFilterChain chain) -> {
       // We can do anything that we want to do here in prefilter
-      System.out.println("Inside prefilter of xyzFilter- order 3");
+      log.info("Inside prefilter of xyzFilter- order 3");
       return chain.filter(exchange);
       // This is for post filter, just add ".then(Mono.fromRunnable(()->{" to the above return
       // statement and write the post filter logic

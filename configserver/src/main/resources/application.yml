@@ -1,21 +1,50 @@
+#the encrpt key is used to encrypt our username and password and other things present in .properties file in the GIT
+#this key can be kept in vault, After giving the encrypted key here do a POST request to http://localhost:8888/encrypt
+#and give your username,password,etc as a body to get the encrypted value and paste the values in the git config file one by one
+#Use {cypher} in front of them so that my server can automatically decrypt the values while reading
+encrypt:
+  key: werock
+
 server:
-  port: 8085
+  port: 8888
 
 spring:
   application:
-    name: CONFIG_SERVER
-  boot:
-    admin:
-      client:
-            url: http://localhost:1111/
-
+    name: CONFIG-SERVER
   cloud:
     config:
       server:
-        git:
+        git: #As the name of the master branch of the git is changed to main, if an error called "No such label:main" is thrown, use below property and set main here
+          default-label: master
           uri: https://github.com/rakeshpal685/microservices-config-server
+#          Username and password for private repositories,
+#          username: rakesh
+#          Don't give the password directly, generate a access token from github and give it here
+#          password:password
           clone-on-start: true
-#we can put username and password too for private repo
+#          http://localhost:8888/EMPLOYEE-SERVICE/dev- to check the properties file values
+
+  # This is for JDBC support for config details, create a table called PROPERTIES and have columns id,APPLICATION,PROFILE,LABEL,PROP_KEY,VALUE,
+  # Add datasource properties too in the .properties file here,
+  # see document for more information
+  #        jdbc:
+  #          sql: SELECT PROP_KEY,VALUE from PROPERTIES where APPLICATION=? and PROFILE=? and LABEL=?
+  #    profile:
+  #    active: jdbc
+
+  #If my configuration is present in local system
+  #        native:
+  #          search-location:file:///Users/rakesh/Desktop/configfile
+  #  profile:
+  #    active: native
+
+  #My remaining properties will be loaded from the git repository mentioned above, add @EnableConfigServer on main class
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:1111/
+      #we can put username and password too for private repo
 
 management:
   endpoints:
@@ -23,6 +52,13 @@ management:
       exposure:
         include: "*"
 
+#logging:
+#  level:
+#    root: INFO
 
-
+#eureka properties
+eureka:
+  client:
+    service-url:
+      defaultZone:  http://localhost:8761/eureka/
 

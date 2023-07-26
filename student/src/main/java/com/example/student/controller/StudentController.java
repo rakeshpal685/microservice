@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/studController")
+@Log4j2
 public class StudentController {
 
   @Autowired StudentService studentService;
@@ -57,6 +59,7 @@ public class StudentController {
         @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
       })
   public ResponseEntity<List<StudentResponse>> getAllStudents() {
+    log.info("Inside Student Controller's {} method", "getAllStudents()");
     return ResponseEntity.status(HttpStatus.OK).body(studentService.getAllStudents());
     /*    Rather than creating a new ResponseEntity<> object like below we can do this also*/
   }

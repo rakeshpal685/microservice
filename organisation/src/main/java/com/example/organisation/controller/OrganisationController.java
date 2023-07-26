@@ -20,7 +20,7 @@ public class OrganisationController {
   @CircuitBreaker(name="org-details",fallbackMethod = "organizationDetailsFallback")
   @GetMapping("/org-details")
   public ResponseEntity<OrganisationDTO> organizationDetails() {
-    log.info("Inside Organisation Controller");
+    log.info("Inside Organisation Controller's {} method","organizationDetails()");
     OrganisationDTO organisationDTO = new OrganisationDTO();
     organisationDTO.setOrganisationDetail(new OrganisationDetail());
     organisationDTO.setEmployeesDTOs(organisationService.getAllEmployees().getBody());

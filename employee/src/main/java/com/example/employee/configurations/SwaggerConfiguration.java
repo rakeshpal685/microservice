@@ -5,7 +5,9 @@ import io.swagger.v3.oas.models.info.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-// http://localhost:8080/swagger-ui/index.html --Swagger URL,use the port where the service is running
+/* http://localhost:8080/swagger-ui/index.html --Swagger URL,use the port where the service is running
+to enable swagger in local, in prod profile we will set this property to false, so that no swagger is available there
+springdoc.swagger-ui.enabled=true*/
 @Configuration
 // @EnableSwagger2-  Old way
 public class SwaggerConfiguration {

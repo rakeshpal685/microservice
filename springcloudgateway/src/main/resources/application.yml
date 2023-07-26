@@ -18,12 +18,13 @@ management:
 #logging for cloud gateway
 logging:
   level:
-    org:
-      springframework:
-        cloud:
-          gateway=INFO:
+    root: INFO
+#    org:
+#      springframework:
+#        cloud:
+#          gateway=WARN:
 
-# server port
+
 server:
   port: 8084
 
