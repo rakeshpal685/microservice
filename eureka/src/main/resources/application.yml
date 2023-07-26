@@ -2,6 +2,7 @@ server:
   port: 8761
 #  port: 5000
 #  If both my API and Eureka is running on the same machine then if we use 8761 for Eureka then all my API's will get auto registered,
+#because when we add eureka client in our microservices, by default fetch-registry and register-with-eureka properties are true
 #If not then I have to tell my services to register themselves with the modified url like below
 #eureka.client.service-url.defaultZone=http://localhost:5000/eureka/
 
